@@ -1,15 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading;
+using VideoPlayerController;
 
 namespace UnfuckMicrophone
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
+            var handle = HandleYolo.GetConsoleWindow();
+            HandleYolo.ShowWindow(handle, HandleYolo.SW_HIDE);
+
+            while (true)
+            {
+                try
+                {
+                    var t = AudioManager.GetComMicVolume();
+                    if (t == 40) // F*ck skype for business.
+                        AudioManager.SetComMivVolume(100);
+                }
+                catch
+                {
+                    // Don't care. Happens if no microphone.
+                }
+
+                Thread.Sleep(1000 * 2);
+            }
         }
     }
 }
